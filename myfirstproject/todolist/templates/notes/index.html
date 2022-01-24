@@ -1,0 +1,42 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>
+            <span>Note List</span>
+        </title>
+    </head>
+    <body>
+        <div class="content">
+            <h3>Note List | TO DO LIST</h3>
+            <a href="{% url 'note.create' %}">CREATE NEW NOTE</a><br>
+            <h5><span>{%  if msg %} {{ msg }} {% endif %} </span></h5>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>S.No</th>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Added At</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for value in data %}
+                        <tr>
+                            <!-- counts the data rows and increment the value -->
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ value.note_title }}</td>
+                            <td>{{ value.note_description }}</td>
+                            <td>{{ value.note_added_at }}</td>
+                            <td>
+                                <a href="{% url 'note.show' value.id %}">Show</a>
+                                <a href="{% url 'note.edit' value.id %}">Edit</a>
+                                <a href="#">Delete</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>

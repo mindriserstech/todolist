@@ -1,0 +1,34 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>
+            <span>Note Show</span>
+        </title>
+    </head>
+    <body>
+        <div class="content">
+            <h3>Note Details | TO DO LIST</h3>
+            <a href="{% url 'note.index' %}">Back</a><br>
+            <ol>
+                <li>S.NO: <strong>1</strong></li>
+                <li>Title: <strong>{{ data.note_title }}</strong></li>
+                <li>Description: <strong>{{ data.note_description }}</strong></li>
+                <li>Added Date: <strong>{{ data.note_added_at }}</strong></li>
+            </ol>
+            <form action="">
+                <input type="hidden" name="id" value="{{ data.id }}">
+                <br>
+                <label for="note_title">Note Title</label>
+                <input type="text" name="note_title" value="{{ data.note_title }}">
+                <br>
+                <label for="note_title">Note Title</label>
+                <textarea type="textarea" name="note_description">{{ data.note_description  }}</textarea>
+                <br>
+                <label for="note_title">Note Title</label>
+                <input type="text" name="note_added_at" value="{{ data.note_added_at }}">
+                <br>
+                <input type="submit" value="UPDATE">
+            </form>
+        </div>
+    </body>
+</html>

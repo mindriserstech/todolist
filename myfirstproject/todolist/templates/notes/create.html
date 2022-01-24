@@ -1,0 +1,21 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>
+            <h1>Note Create Form</h1>
+        </title>
+    </head>
+    <body>
+        <div class="content">
+            <h3>Note Create | TO DO LIST</h3>
+
+            <h5><span>{%  if msg %} {{ msg }} {% endif %} </span></h5>
+            <a href="{% url 'note.index' %}">Back</a><br>
+            <form action="" method="POST">
+                {% csrf_token %}
+                {{ form.as_p }} 
+                    <input type="submit" value="SAVE">
+            </form>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Django Templates</title>
+    </head>
+    <body>
+        <!-- Note -->
+        <!-- Variable -->
+        {{ title }}
+        {{ month }}
+        {% autoescape off %} {{ cal }} {% endautoescape %}
+    
+        <h1>Data from User Task Form</h1>
+        {{ data.task_title }}
+        <br>
+        {{ data.task_description }}
+        <br>
+        {{ data.task_assigned_at }}
+        <br>
+        {{ data.task_accomplish_date }}
+        <br>
+        {{ data.task_progress_status }}
+    </body>
+</html>

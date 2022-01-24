@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Django Templates</title>
+    </head>
+    <style>
+        input, label {
+            width: 300px;
+            height: 30px;
+            font-size: 20px;
+            border-radius: 25px;
+        }
+
+        button {
+            width: 200px;
+            height: 50px;
+            border-radius: 0;
+            border: 1px solid red;
+            color: red;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: red;
+            color: white;
+        }
+    </style>
+    <body>
+        <form method="#" action="{% url 'task.post' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+                <input type="submit" value="SAVE">
+        </form>
+
+        <div>
+            {{ task_title }}
+            {{ task_description }}
+            {{ task_assigned_at }}
+            {{ task_progress_status }}
+        </div>
+    </body>
+</html>
