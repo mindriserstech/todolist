@@ -11,7 +11,7 @@
 
             <h5><span>{%  if msg %} {{ msg }} {% endif %} </span></h5>
             <a href="{% url 'note.index' %}">Back</a><br>
-            <form action="" method="POST">
+            <form action="{% url 'note.create' %}" method="POST">
                 {% csrf_token %}
                 {{ form.as_p }} 
                     <input type="submit" value="SAVE">

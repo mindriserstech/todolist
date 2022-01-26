@@ -11,8 +11,10 @@ urlpatterns = [
     # urls - note - code refractor
     path('note/', views.note_index, name="note.index"),
     path('note/create', views.note_create, name="note.create"),
+    path('note/update', views.note_update, name="note.update"),
     path('note/show/<int:note_id>', views.note_show, name="note.show"),
     path('note/edit/<int:note_id>', views.note_edit, name="note.edit"),
+    path('note/delete/<int:note_id>', views.note_delete, name="note.delete"),
 
     # index.html
     # ORM 

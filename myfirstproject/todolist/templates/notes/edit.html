@@ -2,7 +2,7 @@
     <head>
         <meta charset="utf-8">
         <title>
-            <span>Note Show</span>
+            Note Show
         </title>
     </head>
     <body>
@@ -15,16 +15,17 @@
                 <li>Description: <strong>{{ data.note_description }}</strong></li>
                 <li>Added Date: <strong>{{ data.note_added_at }}</strong></li>
             </ol>
-            <form action="">
+            <form action="{% url 'note.update' %}" method="POST">
+                {% csrf_token %}
                 <input type="hidden" name="id" value="{{ data.id }}">
                 <br>
                 <label for="note_title">Note Title</label>
                 <input type="text" name="note_title" value="{{ data.note_title }}">
                 <br>
-                <label for="note_title">Note Title</label>
+                <label for="note_description">Note Title</label>
                 <textarea type="textarea" name="note_description">{{ data.note_description  }}</textarea>
                 <br>
-                <label for="note_title">Note Title</label>
+                <label for="note_added_at">Note Title</label>
                 <input type="text" name="note_added_at" value="{{ data.note_added_at }}">
                 <br>
                 <input type="submit" value="UPDATE">

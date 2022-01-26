@@ -2,7 +2,7 @@
     <head>
         <meta charset="utf-8">
         <title>
-            <span>Note List</span>
+            Note List
         </title>
     </head>
     <body>
@@ -31,7 +31,7 @@
                             <td>
                                 <a href="{% url 'note.show' value.id %}">Show</a>
                                 <a href="{% url 'note.edit' value.id %}">Edit</a>
-                                <a href="#">Delete</a>
+                                <a href="{% url 'note.delete' value.id %}">Delete</a>
                             </td>
                         </tr>
                     {% endfor %}

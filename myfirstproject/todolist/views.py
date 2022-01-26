@@ -109,3 +109,29 @@ def note_show(request, note_id):
 def note_edit(request, note_id):
     user_edit = UserNote.objects.get(id=note_id)
     return render(request, 'notes/edit.html', {'data': user_edit})
+
+def note_update(request):
+    note_id = request.POST.get('id')
+    if request.method == "POST":
+        # data fetch by id
+        note = UserNote.objects.get(id=note_id)
+        note.note_title = request.POST.get('note_title')
+        note.note_description = request.POST.get('note_description')
+        note.note_added_at = request.POST.get('note_added_at')
+        note.save()
+        msg = "Successfully updated"
+        user_note = UserNote.objects.all()
+        return render(request, 'notes/index.html', {'data': user_note, 'msg': msg})
+    else:
+        msg = "Something went wrong"
+        user_edit = UserNote.objects.get(id=note_id)
+        return render(request, 'notes/edit.html', {'data': user_edit, 'msg': msg})
+
+def note_delete(request, note_id):
+    # creating object by id and deleting the object
+    note = UserNote.objects.get(id=note_id)
+    note.delete()
+    
+    # fetching remaining data and returning back to index page with data
+    un = UserNote.objects.all()
+    return render(request, 'notes/index.html', {'data': un, 'msg': "Successfully deleted"})
