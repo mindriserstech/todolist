@@ -1,12 +1,9 @@
+from unicodedata import name
 from django.urls import path
 from . import views
 
 urlpatterns = [
     path('', views.index, name="index"),
-
-    # urls - note
-    #path('note/', views.note, name="note.index"),
-    path('note-add/', views.note_insert, name="note.add"),
 
     # urls - note - code refractor
     path('note/', views.note_index, name="note.index"),
@@ -15,6 +12,11 @@ urlpatterns = [
     path('note/show/<int:note_id>', views.note_show, name="note.show"),
     path('note/edit/<int:note_id>', views.note_edit, name="note.edit"),
     path('note/delete/<int:note_id>', views.note_delete, name="note.delete"),
+
+    # urls - users
+    path('users/', views.user_index, name="users.index"),
+    path('users/create', views.user_create, name="users.create"),
+    path('users/register', views.user_register, name="users.register")
 
     # index.html
     # ORM 

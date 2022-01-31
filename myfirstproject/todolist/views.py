@@ -11,9 +11,11 @@ from todolist.form import UserTaskForm
 from todolist.form import AssignedTaskDescForm
 from todolist.form import UserNoteForm
 from todolist.form import PersonalTaskForm
+from todolist.form import UserRegistrationForm
 
 # importing models
 from todolist.models import UserNote
+from todolist.models import User
 
 # Create your views here.
 def index(request, year=date.today().year, month=date.today().month):
@@ -31,51 +33,6 @@ def index(request, year=date.today().year, month=date.today().month):
     title = "Current Month: " + month_name
     data = {'title':title, 'cal': cal , 'month': month}
     return render(request, "base.html", data)
-
-def user_task(request):
-    userTask = UserTaskForm
-    return render(request, "index.html", {'form':userTask})
-
-# loads the note index page
-def note(request):
-    note = UserNoteForm
-
-    # method one by creating object and retreiving data
-    un1 = UserNote
-    un1.objects.all()
-    # method two creating object and retrieving data at the time
-    un2 = UserNote.objects.all()
-    
-    return render(request, 'note.html', {'form': note, "obj1": un1, "obj2": un2})
-
-# stores the note data to database
-def note_insert(request):
-    template = 'note.html'
-
-    # creating object of form
-    note = UserNoteForm
-        
-    # filtering request method
-    if request.method == "POST":
-        # filtering request data
-        title = request.POST.get('note_title')
-        desc = request.POST.get('note_description')
-        add_at = request.POST.get('note_added_at')
-        
-        un = UserNote(note_title=title, \
-            note_description=desc, \
-                note_added_at=add_at)
-        un.save()
-        # success message
-        msg = "Success"
-        # sending response to request
-        return render(request, template, {'form': note, 'msg': msg, 'data': un})
-        # else:
-        #     msg = 'Fail'
-        #     return render(request, template, {'form': note, 'msg': msg})
-    else:
-        msg = "Something went wrong"
-        return render(request, template, {'form': note, 'msg': msg})
 
 # note - refractor
 # note index - this method display all list of notes
@@ -135,3 +92,39 @@ def note_delete(request, note_id):
     # fetching remaining data and returning back to index page with data
     un = UserNote.objects.all()
     return render(request, 'notes/index.html', {'data': un, 'msg': "Successfully deleted"})
+
+# user
+def user_create(request):
+    userForm = UserRegistrationForm 
+    return render(request, 'users/create.html', {'form': userForm})
+
+def user_index(request):
+    if request.session.has_key('username'):
+        username = request.session['username']
+        return render(request, 'users/index.html', {'username': username})
+    else:
+        return render(request, 'users/login.html')
+
+def user_register(request):
+    if request.method == "POST":
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        contact = request.POST.get('contact')
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = User(first_name=first_name, last_name=last_name, contact=contact, \
+            username=username, password=password)
+        user.save()
+
+        # setting session
+        request.session['username'] = username
+
+        # checking session key if exist
+        if request.session.has_key('username'):
+            # getting session value
+            uname = request.session['username']
+            return render(request, 'users/index.html', {'username': uname})
+    else:
+        userForm = UserRegistrationForm 
+        return render(request, 'users/create.html', {'form': userForm})

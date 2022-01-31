@@ -1,0 +1,18 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>
+            <h1>User Registration</h1>
+        </title>
+    </head>
+    <body>
+        <div class="content">
+            <h3>User Registration | TO DO LIST</h3>
+            <form action="{% url 'users.register' %}" method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                    <input type="submit" value="SAVE">
+            </form>
+        </div>
+    </body>
+</html>

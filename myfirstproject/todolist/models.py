@@ -42,3 +42,13 @@ class UserNote(models.Model):
 
     class Meta:
         db_table = "user_note"
+
+class User(models.Model):
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    contact = models.CharField(max_length=100)
+    username = models.CharField(max_length=100)
+    password = models.CharField(max_length=100)
+
+    class Meta:
+        db_table = "users"
