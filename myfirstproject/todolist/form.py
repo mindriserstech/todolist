@@ -16,6 +16,11 @@ class UserRegistrationForm(forms.ModelForm):
         model = User
         fields = "__all__"
 
+class UserLoginForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('username', 'password',)
+
 class AssignedTaskDescForm(forms.ModelForm):
     class Meta:
         model = AssignedTaskDescription

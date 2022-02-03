@@ -8,6 +8,15 @@
     <body>
         <div class="content">
             <h3>User Login | TO DO LIST</h3>
+
+            <span>{% if msg %} {{ msg }} {% endif %}</span>
+            <div class="content">
+                <form action="{% url 'users.login' %}" method="POST">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <input type="submit" value="LOGIN"> 
+                </form>
+            </div>
         </div>
     </body>
 </html>

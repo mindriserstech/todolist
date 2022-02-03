@@ -1,3 +1,4 @@
+from tempfile import template
 from django.contrib import admin
 
 from django.shortcuts import render
@@ -12,6 +13,7 @@ from todolist.form import AssignedTaskDescForm
 from todolist.form import UserNoteForm
 from todolist.form import PersonalTaskForm
 from todolist.form import UserRegistrationForm
+from todolist.form import UserLoginForm
 
 # importing models
 from todolist.models import UserNote
@@ -103,7 +105,11 @@ def user_index(request):
         username = request.session['username']
         return render(request, 'users/index.html', {'username': username})
     else:
-        return render(request, 'users/login.html')
+        template = 'users/login.html'
+        ul = UserLoginForm
+        msg = "Please login to access"
+        context = {'form':ul, 'msg': msg}
+        return render(request, template, context)
 
 def user_register(request):
     if request.method == "POST":
@@ -128,3 +134,32 @@ def user_register(request):
     else:
         userForm = UserRegistrationForm 
         return render(request, 'users/create.html', {'form': userForm})
+
+def user_login(request):
+    template = 'users/login.html'
+    form = UserLoginForm
+    context = {'form':form}
+    if request.method == "POST":
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = User.objects.get(username=username)
+        if password == user.password:
+            request.session['username'] = user.username
+            if request.session.has_key('username'):
+                uname = request.session['username']
+                return render(request, 'users/index.html', {'username': uname})
+        else:
+            return render(request, template, context)
+    else:
+        return render(request, template, context)
+
+def user_logout(request):
+    template = 'users/login.html'
+    ul = UserLoginForm
+    msg = "Please login to access"
+    context = {'form':ul, 'msg': msg}
+    if request.session.has_key('username'):
+        del request.session['username']
+        return render(request, template, context)
+    else:
+        return render(request, template, context)
