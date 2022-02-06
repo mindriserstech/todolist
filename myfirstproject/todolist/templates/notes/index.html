@@ -4,13 +4,23 @@
         <title>
             Note List
         </title>
+        <!-- datatable cdn -->
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css">
+        
+        <!-- bootstrap 5 cdn -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+        <!-- fontawesome cdn -->
+        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    
+
     </head>
     <body>
-        <div class="content">
+        <div class="container-fluid">
             <h3>Note List | TO DO LIST</h3>
             <a href="{% url 'note.create' %}">CREATE NEW NOTE</a><br>
             <h5><span>{%  if msg %} {{ msg }} {% endif %} </span></h5>
-            <table border="1">
+            <table class="table table-border table-hover" id="note-list">
                 <thead>
                     <tr>
                         <th>S.No</th>
@@ -29,14 +39,40 @@
                             <td>{{ value.note_description }}</td>
                             <td>{{ value.note_added_at }}</td>
                             <td>
-                                <a href="{% url 'note.show' value.id %}">Show</a>
-                                <a href="{% url 'note.edit' value.id %}">Edit</a>
-                                <a href="{% url 'note.delete' value.id %}">Delete</a>
+                                <a href="{% url 'note.show' value.id %}"> <i class="fas fa-eye"></i></a>
+                                <a href="{% url 'note.edit' value.id %}"><i class="fas fa-edit"></i></a>
+                                <a href="{% url 'note.delete' value.id %}"><i class="fas fa-trash-alt"></i></a>
                             </td>
                         </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
+
+        <!-- jquery cdn -->
+        <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+        
+        <!-- ajax cdn -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        
+        <!-- datable js -->
+        <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+        
+        <!-- bootstrap js  -->
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    
+        <script>
+            var token = '{{ csrf_token }}';
+            $(document).ready(function(){
+                $.ajax({
+                    headers: {"X-CSRFToken": token},
+                    url: '{% url 'note.index' %}',
+                    success: function(data){
+                        console.log(data);
+                    }
+                });
+            });
+        </script>
     </body>
 </html>
