@@ -1,3 +1,4 @@
+from distutils.command.upload import upload
 from django.db import models
 
 # Create your models here.
@@ -50,5 +51,13 @@ class User(models.Model):
     username = models.CharField(max_length=100)
     password = models.CharField(max_length=100)
 
+    # password = models.CharField(widget=forms.PasswordInput())
+
     class Meta:
         db_table = "users"
+
+class UserProfile(models.Model):
+    image_url = models.FileField(upload_to='document/users/profile/')
+
+    class Meta:
+        db_table = "users_profile"

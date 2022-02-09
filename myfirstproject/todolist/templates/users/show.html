@@ -1,0 +1,24 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>
+            User Profile
+        </title>
+    </head>
+    <body>
+        <div class="content">
+            <h3>User Profile | TO DO LIST</h3>
+            <div>
+                <h4>Name: {{ data.first_name }} {{ data.last_name }}</h4>
+                <h4>Contact: {{ data.contact  }}</h4>
+                <h4>Username: {{ data.username }}</h4>
+            </div>
+            <form action="{% url 'users.profile' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                    <label for="">Upload Profile Picture</label>
+                    <input type="submit" value="UPLOAD">
+            </form>
+        </div>
+    </body>
+</html>

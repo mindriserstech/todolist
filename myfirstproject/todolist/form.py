@@ -1,5 +1,6 @@
 from django import forms
 from django.db.models import fields
+from todolist.models import UserProfile
 from todolist.models import User
 from todolist.models import UserTask
 from todolist.models import AssignedTaskDescription
@@ -9,6 +10,11 @@ from todolist.models import UserNote
 class UserTaskForm(forms.ModelForm):
     class Meta:
         model = UserTask
+        fields = "__all__"
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
         fields = "__all__"
 
 class UserRegistrationForm(forms.ModelForm):

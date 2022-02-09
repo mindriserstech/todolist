@@ -6,7 +6,8 @@ from django.http import HttpResponse
 from datetime import date
 import calendar
 from calendar import HTMLCalendar
-
+import json
+from todolist.form import UserProfileForm
 #importing forms
 from todolist.form import UserTaskForm
 from todolist.form import AssignedTaskDescForm
@@ -38,9 +39,19 @@ def index(request, year=date.today().year, month=date.today().month):
 
 # note - refractor
 # note index - this method display all list of notes
+def note_ajax_index(request):
+    user_note = UserNote.objects.all()
+    result = dict()
+    for i in user_note:
+        result.update({
+            'title': "TITLE",
+            'desc': "DESC",
+        })
+    return HttpResponse(request, json.dumps(result))
+
 def note_index(request):
     user_note = UserNote.objects.all()
-    return render(request, 'notes/index.html', {"data":user_note})
+    return render(request, 'notes/index.html', {"notelist":user_note})
 
 # note create - this method loads form and stores data of note
 def note_create(request):
@@ -152,6 +163,22 @@ def user_login(request):
             return render(request, template, context)
     else:
         return render(request, template, context)
+
+def user_profile(request):
+    if request.session.has_key('username'):
+        username = request.session['username']
+        user = User.objects.get(username=username)
+        form = UserProfileForm
+        if request.method == "POST":
+            formSave = UserProfileForm(request.POST, request.FILES)
+            if formSave.is_valid():
+                formSave.save()
+                return render(request, 'users/show.html', {'form': form, 'data': user})
+        else:
+            return render(request, 'users/show.html', {'form': form, 'data': user})
+    else:
+        formLogin = UserLoginForm
+        return render(request, 'users/login.html', {'form': formLogin, 'msg': "please login to access"})
 
 def user_logout(request):
     template = 'users/login.html'
