@@ -8,6 +8,8 @@ import calendar
 from calendar import HTMLCalendar
 import json
 from todolist.form import UserProfileForm
+from django.core.mail import send_mail as sm
+
 #importing forms
 from todolist.form import UserTaskForm
 from todolist.form import AssignedTaskDescForm
@@ -105,6 +107,29 @@ def note_delete(request, note_id):
     # fetching remaining data and returning back to index page with data
     un = UserNote.objects.all()
     return render(request, 'notes/index.html', {'data': un, 'msg': "Successfully deleted"})
+
+# send email
+def send_email(request):
+    # to take request from post method
+    
+    # res = sm(
+    #     subject = request.POST.get('subject'),
+    #     message = request.POST.get('message'),
+    #     from_email = 'c4crypt@gmail.com',
+    #     recipient_list = [request.POST.get('receiver_email')],
+    #     fail_silently = False,
+    # )
+
+    res = sm(
+        subject = 'Gmail Email Send Test',
+        message = 'Here is the message we are send you to test our gmail send message',
+        from_email = 'c4crypt@gmail.com',
+        recipient_list = ['sandesh@cac.edu.au'],
+        fail_silently = False,
+        # fail_silently takes boolean value. If set False it will raise smtplib.STMPException if the error
+        # occurs while sending the email
+    )
+    return HttpResponse(request, "Email send sucess" + str(res))
 
 # user
 def user_create(request):

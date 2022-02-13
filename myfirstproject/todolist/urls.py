@@ -20,7 +20,10 @@ urlpatterns = [
     path('users/create', views.user_create, name="users.create"),
     path('users/register', views.user_register, name="users.register"),
     path('users/login', views.user_login, name="users.login"),
-    path('users/logout', views.user_logout, name="users.logout")
+    path('users/logout', views.user_logout, name="users.logout"),
+
+    # send email
+    path('send-email/', views.send_email, name="send.email")
 
     # index.html
     # ORM 
