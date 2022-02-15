@@ -3,6 +3,9 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
+
+    # api response
+    path('api/v1/note', views.note_index_api, name="api.note.index"),
     path('', views.index, name="index"),
 
     # urls - note - code refractor

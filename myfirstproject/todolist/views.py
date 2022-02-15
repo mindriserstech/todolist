@@ -1,6 +1,5 @@
 from tempfile import template
 from django.contrib import admin
-
 from django.shortcuts import render
 from django.http import HttpResponse
 from datetime import date
@@ -9,6 +8,9 @@ from calendar import HTMLCalendar
 import json
 from todolist.form import UserProfileForm
 from django.core.mail import send_mail as sm
+
+#  json response
+from django.http import JsonResponse
 
 #importing forms
 from todolist.form import UserTaskForm
@@ -21,6 +23,49 @@ from todolist.form import UserLoginForm
 # importing models
 from todolist.models import UserNote
 from todolist.models import User
+
+# api functions
+def note_index_api(request):
+    if request.headers:
+        if request.method == "GET":
+            # data = UserNote.objects.all()
+            data = dict(
+                {
+                    "note_title": "This is note title",
+                    "note_desc": "This is desc",
+                    "note_added_at": "2022-02-20",
+                }
+            )
+            api_response = {
+                'status_code': 200,
+                'message': "Fetched Successfully",
+                'data': data,
+                'error': []
+            }
+
+            return JsonResponse(api_response)
+        else:
+            api_response = {
+                'status_code': 405,
+                'message': "Method not allowed",
+                'data': [],
+                'error': {
+                    'code': 405,
+                    'message': 'Must be GET request'
+                }
+            }
+            return JsonResponse(api_response)
+    else:
+        api_response = {
+            'status_code': 503,
+            'message': "Serivce Not Available",
+            'data': [],
+            'error': {
+                'code': 503, 
+                'message': 'Serivce Not Available'
+            }
+        }
+        return JsonResponse(api_response)
 
 # Create your views here.
 def index(request, year=date.today().year, month=date.today().month):
