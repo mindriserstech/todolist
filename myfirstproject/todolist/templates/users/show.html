@@ -20,5 +20,29 @@
                     <input type="submit" value="UPLOAD">
             </form>
         </div>
+
+        <!-- ajax cdn -->
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+        
+        <!-- jquery cdn -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        
+        <script>
+            $(document).ready(function(){
+                var token = '{% csrf_token %}';
+
+                // ajax syntax
+                $.ajax({
+                    type: 'GET',
+                    headers: {"X-CSRFToken": token},
+                    url: '{% url "up.ajax" %}',
+                    contentType: 'Application/json',
+                    data: {'csrfmiddlewaretoken': token},
+                    success: function(data){
+                        console.log(data);
+                    }
+                });
+            });
+        </script>
     </body>
 </html>

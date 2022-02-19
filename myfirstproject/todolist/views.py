@@ -1,3 +1,4 @@
+import email
 from tempfile import template
 from django.contrib import admin
 from django.shortcuts import render
@@ -11,6 +12,7 @@ from django.core.mail import send_mail as sm
 
 #  json response
 from django.http import JsonResponse
+from django.core import serializers
 
 #importing forms
 from todolist.form import UserTaskForm
@@ -87,14 +89,8 @@ def index(request, year=date.today().year, month=date.today().month):
 # note - refractor
 # note index - this method display all list of notes
 def note_ajax_index(request):
-    user_note = UserNote.objects.all()
-    result = dict()
-    for i in user_note:
-        result.update({
-            'title': "TITLE",
-            'desc': "DESC",
-        })
-    return HttpResponse(request, json.dumps(result))
+    result = serializers.serialize("json", UserNote.objects.all())
+    return HttpResponse(result)
 
 def note_index(request):
     user_note = UserNote.objects.all()
@@ -249,6 +245,12 @@ def user_profile(request):
     else:
         formLogin = UserLoginForm
         return render(request, 'users/login.html', {'form': formLogin, 'msg': "please login to access"})
+
+def user_profile_ajax(request):
+    # profile = User.objects.get(username=request.session['username'])
+    # username = request.session['username']
+    data = serializers.serialize('json', User.objects.all())
+    return HttpResponse(data)
 
 def user_logout(request):
     template = 'users/login.html'

@@ -20,6 +20,7 @@ urlpatterns = [
     # urls - users
     path('users/', views.user_index, name="users.index"),
     path('users/profile', views.user_profile, name="users.profile"),
+    path('users/profile/ajax', views.user_profile_ajax, name="up.ajax"),
     path('users/create', views.user_create, name="users.create"),
     path('users/register', views.user_register, name="users.register"),
     path('users/login', views.user_login, name="users.login"),

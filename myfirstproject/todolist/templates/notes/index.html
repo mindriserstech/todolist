@@ -57,19 +57,19 @@
             function getTableData(){
                 var tableData = "";
                 $.ajax({
-                    type: "GET",
-                    dataType: "JSON",
+                    type: 'GET',
                     headers: {"X-CSRFToken": token},
                     url: '{% url "note.ajax" %}',
+                    data: {'csrfmiddlewaretoken': token},
                     success: function(data){
-                        console.log(result.title);
+                        
                         console.log(data);
-                        console.log("hello");
+                        console.log(note_title);
                         for(let i =0; i < data['result'].length; i++){
                             tableData += "<tr>" +
-                                "<td>" + data['result'][i].schema + "</td>" +
-                                "<td>" + data['result'][i].note_title + "</td>" +
-                                "<td>" + data['result'][i].note_description + "</td>" +
+                                "<td>" + data['fields'][i].schema + "</td>" +
+                                "<td>" + data['fields'][i].note_title + "</td>" +
+                                "<td>" + data['fields'][i].note_description + "</td>" +
                             "</tr>"
                         }
                         $("#note-list").html(tableData);
