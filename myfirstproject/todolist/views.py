@@ -7,6 +7,7 @@ from datetime import date
 import calendar
 from calendar import HTMLCalendar
 import json
+
 from todolist.form import UserProfileForm
 from django.core.mail import send_mail as sm
 
@@ -15,17 +16,54 @@ from django.http import JsonResponse
 from django.core import serializers
 
 #importing forms
-from todolist.form import UserTaskForm
-from todolist.form import AssignedTaskDescForm
-from todolist.form import UserNoteForm
-from todolist.form import PersonalTaskForm
-from todolist.form import UserRegistrationForm
-from todolist.form import UserLoginForm
+from todolist.form import UserTaskForm, AssignedTaskDescForm, UserNoteForm, PersonalTaskForm, UserRegistrationForm, UserLoginForm
 
 # importing models
 from todolist.models import UserNote
-from todolist.models import User
+from todolist.models import User, UserTask
 
+# task CRUD
+# index (display list), create (form), store (data store), edit (data edit), update (data update), delete (data delete),
+# show (data show by id)
+def tasks_index(request):
+    context = UserTask.objects.all()
+    return render(request, 'tasks/index.html', {'data': context, 'msg' : 'Success'})
+
+def tasks_create(request):
+    tf = UserTaskForm()
+    return render(request, 'tasks/create.html', {'form': tf})
+
+def tasks_store(request):
+    tf = UserTaskForm()
+    if request.method == "POST":
+        try:
+            ut = UserTask(task_title=request.POST.get('task_title'),\
+                task_description=request.POST.get('task_description'),\
+                    task_assigned_at=request.POST.get('task_assigned_at'), \
+                        task_accomplish_date=request.POST.get('task_accomplish_date'), \
+                            task_assigned_by=request.POST.get('task_assigned_by'), \
+                                task_progress_status=request.POST.get('task_progress_status'), \
+                                    task_assigned_to=request.POST.get('task_assigned_to'))
+            ut.save()
+            context = UserTask.objects.all()
+            return render(request, 'tasks/index.html', {'data': context, 'msg' : 'Success'})
+        except:
+            return render(request, 'tasks/create.html', {'form': tf, 'msg' : 'Something went wrong'})
+    else:
+        return render(request, 'tasks/create.html', {'form': tf, 'msg' : 'Something went wrong'})
+
+
+def tasks_edit(request):
+    return render()
+
+def tasks_update(request):
+    return render()
+
+def tasks_delete(request):
+    return render()
+
+def tasks_show(request):
+    return render()
 # api functions
 def note_index_api(request):
     if request.headers:

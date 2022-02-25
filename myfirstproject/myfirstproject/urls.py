@@ -20,3 +20,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('todolist.urls'))
 ]
+
+# customizing admin dashboard 
+admin.site.site_header = "Todolist Admin"
+admin.site.site_title = "Todolist | Dashboard"
+admin.site.index_title = "Dashboard"
+
+

@@ -15,6 +15,9 @@ class UserTask(models.Model):
     class Meta:
         db_table = "user_task"
 
+    def __str__(self):
+        return self.task_title
+
 class AssignedTaskDescription(models.Model):
     task_user = models.CharField(max_length=100)
     task_update_description = models.CharField(max_length=200)
@@ -43,6 +46,9 @@ class UserNote(models.Model):
 
     class Meta:
         db_table = "user_note"
+    
+    def __str__(self):
+        return self.note_title
 
 class User(models.Model):
     first_name = models.CharField(max_length=100)

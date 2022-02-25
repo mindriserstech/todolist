@@ -4,6 +4,15 @@ from . import views
 
 urlpatterns = [
 
+    # tasks url
+    path('tasks/', views.tasks_index, name="tasks.index"),
+    path('tasks/create', views.tasks_create, name="tasks.create"),
+    path('tasks/store', views.tasks_store, name="tasks.store"),
+    path('tasks/edit/<int:note_id>', views.tasks_edit, name="tasks.edit"),
+    path('tasks/show/<int:note_id>', views.tasks_show, name="tasks.show"),
+    path('tasks/delete/<int:note_id>', views.tasks_delete, name="tasks.delete"),
+    path('tasks/update', views.tasks_update, name="tasks.update"),
+
     # api response
     path('api/v1/note', views.note_index_api, name="api.note.index"),
     path('', views.index, name="index"),
